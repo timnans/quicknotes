@@ -6,6 +6,22 @@ class NotesController < ApplicationController
     @notes = Note.all
   end
 
+  def search
+    if params[:query].present?
+      @notes = Note.where("name LIKE ?", "%#{params[:query]}%")
+    else
+      @notes = Note.all
+    end
+
+    render turbo_stream: turbo_stream.replace(
+      "notes",
+      partial: "note",
+      locals: {
+        notes: @notes,
+      },
+    )
+  end
+
   # GET /notes/1 or /notes/1.json
   def show
   end
@@ -58,13 +74,14 @@ class NotesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_note
-      @note = Note.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def note_params
-      params.require(:note).permit(:name, :content)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_note
+    @note = Note.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def note_params
+    params.require(:note).permit(:name, :content)
+  end
 end

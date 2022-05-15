@@ -2,13 +2,16 @@
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
+<%= form_with(url: search_notes_path, data: { controller: 'form-submission', form_submission_target: "form" }) do |form| %>
+  <%= form.label :query, "Search by name:" %>
+  <%= form.text_field :query, data: { action: "input->form-submission#search" } %>
+<% end %>
+
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Notes</h1>
     <%= link_to 'New note', new_note_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="notes" class="min-w-full">
-    <%= render @notes %>
-  </div>
+    <%= render "note", notes: @notes %>
 </div>
