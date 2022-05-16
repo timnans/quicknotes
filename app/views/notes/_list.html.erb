@@ -1,29 +1,31 @@
 
-  <% notes.each do |note| %>
 
-  <div id="<%= dom_id note %>" >
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= note.name %>
-  </p>
+<div id="notes" class="min-w-full">
 
-  <p class="my-5">
+<% @notes.each do |note| %>
 
-    <strong class="block font-medium mb-1">Content:</strong>
-      <pre><code>
-    <%= truncate(note.content )%>
-    </code>
-    </pre>
-  </p>
+<div id="<%= dom_id note %>" >
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this note", note, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to 'Edit this note', edit_note_path(note), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-          <%= button_to 'Destroy this note', note_path(note), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<p class="my-5">
+<strong class="block font-medium mb-1">Name:</strong>
+<%= note.name %>
+</p>
 
-    <hr class="mt-6">
-  <% end %>
-  
+<p class="my-5">
+
+<strong class="block font-medium mb-1">Content:</strong>
+<pre><code>
+<%= note.content %>
+</code>
+</pre>
+</p>
+
+<% if action_name != "show" %>
+<%= link_to "Show this note", note, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<%= link_to 'Edit this note', edit_note_path(note), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+<hr class="mt-6">
+<% end %>
+</div>
 
 <% end %>
