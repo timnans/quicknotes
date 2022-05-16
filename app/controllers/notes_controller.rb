@@ -3,14 +3,14 @@ class NotesController < ApplicationController
   before_action :authenticate_user!
   # GET /notes or /notes.json
   def index
-    @notes = current_user.notes.all
+    @notes = current_user.notes.all.order(created_at: :desc)
   end
 
   def search
     if params[:query].present?
-      @notes = current_user.notes.where("name LIKE ?", "%#{params[:query]}%")
+      @notes = current_user.notes.where("name LIKE ?", "%#{params[:query]}%").order(created_at: :desc)
     else
-      @notes = current_user.notes.all
+      @notes = current_user.notes.all.order(created_at: :desc)
     end
 
     render turbo_stream: turbo_stream.replace(
@@ -41,8 +41,10 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
-        format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
-        format.json { render :show, status: :created, location: @note }
+        @notes = current_user.notes.all.order(created_at: :desc)
+        format.turbo_stream
+        # format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
+        # format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @note.errors, status: :unprocessable_entity }

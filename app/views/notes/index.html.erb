@@ -2,17 +2,31 @@
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
+
+
 <%= form_with(url: search_notes_path, data: { controller: 'form-submission', form_submission_target: "form" }) do |form| %>
-  <%= form.label :query, "Search by name:" %>
-  <%= form.text_field :query, data: { action: "input->form-submission#search" } %>
+<div class="flex justify-center">
+  <div class="mb-3 xl:w-96">
+    <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+  <%= form.text_field :query, class: "orm-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none", 
+  placeholder: "Search", data: { action: "input->form-submission#search" } %>
+  </div>
+  </div>
+</div>
 <% end %>
 
+        <%= turbo_frame_tag "new_task" do %>
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Notes</h1>
+
     <%= link_to 'New note', new_note_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
+<% end %>
+      <div id="notes" class="min-w-full">
+
   <%= render  "list",  notes: @notes %>
 
+</div>
 </div>
