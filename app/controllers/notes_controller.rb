@@ -15,10 +15,10 @@ class NotesController < ApplicationController
 
     render turbo_stream: turbo_stream.replace(
       "notes",
-      partial: "note",
+      partial: "list",
       locals: {
         notes: @notes,
-      },
+      }
     )
   end
 

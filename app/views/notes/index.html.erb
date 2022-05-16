@@ -13,5 +13,6 @@
     <%= link_to 'New note', new_note_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-    <%= render "note", notes: @notes %>
+  <%= render  "list",  notes: @notes %>
+
 </div>
