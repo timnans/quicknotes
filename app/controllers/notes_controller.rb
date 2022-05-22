@@ -43,7 +43,7 @@ class NotesController < ApplicationController
       if @note.save
         @notes = current_user.notes.all.order(created_at: :desc)
         format.turbo_stream
-        # format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
+        format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
         # format.json { render :show, status: :created, location: @note }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,8 +56,11 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to note_url(@note), notice: "Note was successfully updated." }
-        format.json { render :show, status: :ok, location: @note }
+        @notes = current_user.notes.all.order(created_at: :desc)
+
+        format.turbo_stream
+        # format.html { redirect_to note_url(@note), notice: "Note was successfully updated." }
+        # format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @note.errors, status: :unprocessable_entity }

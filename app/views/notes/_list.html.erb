@@ -4,6 +4,7 @@
 <div id="notes" class="min-w-full">
 
 <% @notes.each do |note| %>
+<%= turbo_frame_tag note do %>
 
 <div id="<%= dom_id note %>" >
 
@@ -12,7 +13,7 @@
 <%= note.name %>
 </p>
 
-<p class="my-5">
+<p class="my-5"  data-controller="highlight">
 
 <strong class="block font-medium mb-1">Content:</strong>
 <pre><code>
@@ -22,10 +23,9 @@
 </p>
 
 <% if action_name != "show" %>
-<%= link_to "Show this note", note, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
 <%= link_to 'Edit this note', edit_note_path(note), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
 <hr class="mt-6">
 <% end %>
 </div>
-
+<% end %>
 <% end %>
